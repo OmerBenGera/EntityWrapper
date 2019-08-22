@@ -35,7 +35,6 @@ import net.minecraft.server.v1_11_R1.EntityMushroomCow;
 import net.minecraft.server.v1_11_R1.EntityOcelot;
 import net.minecraft.server.v1_11_R1.EntityPig;
 import net.minecraft.server.v1_11_R1.EntityPigZombie;
-import net.minecraft.server.v1_11_R1.EntityPlayer;
 import net.minecraft.server.v1_11_R1.EntityPolarBear;
 import net.minecraft.server.v1_11_R1.EntityRabbit;
 import net.minecraft.server.v1_11_R1.EntitySheep;
@@ -87,7 +86,6 @@ import org.bukkit.craftbukkit.v1_11_R1.entity.CraftMushroomCow;
 import org.bukkit.craftbukkit.v1_11_R1.entity.CraftOcelot;
 import org.bukkit.craftbukkit.v1_11_R1.entity.CraftPig;
 import org.bukkit.craftbukkit.v1_11_R1.entity.CraftPigZombie;
-import org.bukkit.craftbukkit.v1_11_R1.entity.CraftPlayer;
 import org.bukkit.craftbukkit.v1_11_R1.entity.CraftPolarBear;
 import org.bukkit.craftbukkit.v1_11_R1.entity.CraftRabbit;
 import org.bukkit.craftbukkit.v1_11_R1.entity.CraftSheep;
@@ -116,10 +114,6 @@ final class EntityWrapper {
     static CraftEntity getEntity(CraftServer server, Entity entity) {
         try {
             if (entity instanceof EntityLiving) {
-                if (entity instanceof EntityPlayer) {
-                    return new CraftPlayerWrapper(server, (EntityPlayer) entity);
-                }
-
                 if (entity instanceof EntitySquid) {
                     return new CraftSquidWrapper(server, (EntitySquid) entity);
                 }
@@ -144,8 +138,6 @@ final class EntityWrapper {
                     if (entity instanceof EntityBat) {
                         return new CraftBatWrapper(server, (EntityBat) entity);
                     }
-
-                    return new CraftLivingEntityWrapper(server, (EntityLiving) entity);
                 }
 
                 if (entity instanceof EntityAnimal) {
@@ -292,6 +284,10 @@ final class EntityWrapper {
                             return new CraftGuardianWrapper(server, (EntityGuardian) entity);
                         }
 
+                        if (entity instanceof EntityEvoker) {
+                            return new CraftEvokerWrapper(server, (EntityEvoker)entity);
+                        }
+
                         if (entity instanceof EntityVex) {
                             return new CraftVexWrapper(server, (EntityVex) entity);
                         }
@@ -334,20 +330,6 @@ final class EntityWrapper {
         }
 
         return true;
-    }
-
-    private static class CraftPlayerWrapper extends CraftPlayer{
-
-        CraftPlayerWrapper(CraftServer craftServer, EntityPlayer entity){
-            super(craftServer, entity);
-        }
-
-        @Override
-        public void setHealth(double health) {
-            if(EntityWrapper.setHealth(this, health))
-                super.setHealth(health);
-        }
-
     }
 
     private static class CraftSquidWrapper extends CraftSquid {
@@ -423,20 +405,6 @@ final class EntityWrapper {
     private static class CraftBatWrapper extends CraftBat {
 
         CraftBatWrapper(CraftServer craftServer, EntityBat entity){
-            super(craftServer, entity);
-        }
-
-        @Override
-        public void setHealth(double health) {
-            if(EntityWrapper.setHealth(this, health))
-                super.setHealth(health);
-        }
-
-    }
-
-    private static class CraftLivingEntityWrapper extends CraftLivingEntity {
-
-        CraftLivingEntityWrapper(CraftServer craftServer, EntityLiving entity){
             super(craftServer, entity);
         }
 
