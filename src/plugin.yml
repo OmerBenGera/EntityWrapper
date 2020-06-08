@@ -1,6 +1,6 @@
-name: WildStackerEnchantsPatch
+name: WildStackerMobsPatch
 version: 1.0.1
 author: Ome_R
 depend: [WildStacker]
-main: com.ome_r.wildstacker.enchantspatch.WildStackerEnchantsPatch
-api-version: 1.13
+main: com.ome_r.wildstacker.mobspatch.WildStackerMobsPatch
+api-version: '1.13'
